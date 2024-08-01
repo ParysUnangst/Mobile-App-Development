@@ -1,6 +1,12 @@
-# Profile Page App
+# Profile Portfolio Page App
 
-This is a simple Expo application that demonstrates the use of React Native Core Components including `View`, `Text`, `Image`, `ScrollView`, and `TextInput`. The application constructs a profile page showcasing these components' functionality and interactivity.
+This is a personal profile and portfolio app built with React Native and Expo. The app includes features such as profile image upload and project image management using Expo Image Picker.
+
+## Features
+
+- **Profile Image Upload**: Users can update their profile picture using Expo Image Picker.
+- **Project Image Management**: Users can add and update images for each project listed on the Projects Page.
+
 
 ## Table of Contents
 - [Features](#features)
@@ -9,18 +15,43 @@ This is a simple Expo application that demonstrates the use of React Native Core
 - [Contributing](#contributing)
 - [License](#license)
 
-## Features
+## Project Structure
+ProfilePage/
+├── app/
+│   ├── (tabs)/
+│   │   ├── index.tsx
+│   │   ├── Projects.tsx
+├── assets/
+│   ├── images/
+│   │   ├── Profile.jpg
+│   │   ├── placeholder.png
+├── components/
+│   ├── navigation/
+│   │   ├── TabBarIcon.tsx
+├── constants/
+│   ├── Colors.ts
+├── hooks/
+│   ├── useColorScheme.ts
+├── App.tsx
+├── README.md
 
-- **Header Section:** Displays the title of the profile page.
-- **Image Display:** Shows a profile image from local assets.
-- **Information Section:** A scrollable section with multiple text elements.
-- **Input Form:** Allows users to enter their name and a comment, and displays a thank-you message upon submission.
+
+## components
+
+index.tsx
+This file contains the main component of the app. It includes a header section, profile image display with the option to update the image using Expo Image Picker, an information section, and an input form.
+
+Projects.tsx
+This file contains the Projects component which allows users to add and update images for each project. The images can be selected from the user's device using Expo Image Picker.
+
+TabBarIcon.tsx
+This file contains the component for the tab bar icons used in the navigation.
 
 ## Installation
 
 1. **Clone the repository:**
 
-   git clone https://github.com/parysunangst/ProfilePage.git
+   git clone https://github.com/ParysUnangst/Mobile-App-Development/tree/main/ProfilePage
    cd ProfilePageApp
 
 Install dependencies:

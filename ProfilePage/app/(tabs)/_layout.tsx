@@ -32,6 +32,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="projects"
+        options={{
+          title: 'Projects',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'briefcase' : 'briefcase-outline'} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

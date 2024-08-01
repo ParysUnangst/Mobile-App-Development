@@ -1,13 +1,36 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, ScrollView, TextInput, TouchableOpacity } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
+
 export default function App() {
   const [name, setName] = useState('');
   const [comment, setComment] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const handleSubmit = () => {
     setSubmitted(true);
   };
+
+  const pickImage = async () => {
+    const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+    if (status !== 'granted') {
+      alert('Sorry, we need camera roll permissions to make this work!');
+      return;
+    }
+
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled && result.assets && result.assets.length > 0) {
+      setProfileImage(result.assets[0].uri);
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Header Section */}
@@ -16,19 +39,21 @@ export default function App() {
       </View>
 
       {/* Image Display */}
-      <Image 
-        style={styles.profileImage}
-        source={require('/Users/parys/Mobile-App-Development/ProfilePage/assets/images/Profile.jpg')} // Using local image
-      />
+      <TouchableOpacity onPress={pickImage}>
+        <Image 
+          style={styles.profileImage}
+          source={profileImage ? { uri: profileImage } : require('/Users/parys/Mobile-App-Development/ProfilePage/assets/images/Profile.jpg')} 
+        />
+      </TouchableOpacity>
 
-         {/* Information Section */}
-         <ScrollView style={styles.infoSection}>
-            <Text style={styles.infoText}>Welcome to My application! Here, you will find a simple Profile Page using React and Expo.</Text>
-            <Text style={styles.infoText}>I am currently a Junior at North Seattle College in the Application Development Program.</Text>
-            <Text style={styles.infoText}>I am still very new to Expo but enjoying it thus far.</Text>
-            <Text style={styles.infoText}>Please enjoy this simple web app and let me know if you have any questions or feedback.</Text>
-            <Text style={styles.infoText}>Thank you</Text>
-          </ScrollView>
+      {/* Information Section */}
+      <ScrollView style={styles.infoSection}>
+        <Text style={styles.infoText}>Welcome to My application! Here, you will find a simple Profile Page using React and Expo.</Text>
+        <Text style={styles.infoText}>I am currently a Junior at North Seattle College in the Application Development Program.</Text>
+        <Text style={styles.infoText}>I am still very new to Expo but enjoying it thus far.</Text>
+        <Text style={styles.infoText}>Please enjoy this simple web app and let me know if you have any questions or feedback.</Text>
+        <Text style={styles.infoText}>Thank you</Text>
+      </ScrollView>
 
       {/* Input Form */}
       <View style={styles.form}>
@@ -44,7 +69,7 @@ export default function App() {
           value={comment}
           onChangeText={setComment}
         />
-           <TouchableOpacity onPress={handleSubmit}>
+        <TouchableOpacity onPress={handleSubmit}>
           <Text style={styles.submitButton}>Submit</Text>
         </TouchableOpacity>
         {submitted && <Text style={styles.thankYouMessage}>Thank you for visiting!</Text>}
